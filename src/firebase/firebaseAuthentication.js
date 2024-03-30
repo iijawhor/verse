@@ -5,15 +5,16 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged
 } from "firebase/auth";
-import { firebaseApp } from "../firebaseConfig/firebase";
+import { firebaseApp } from "../firebase/firebaseConfig";
 const auth = getAuth(firebaseApp);
 export class FirebaseAuthService {
-  async createUser({ name, email, password }) {
+  async createUser({ email, password, name }) {
     try {
       const userAccount = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
+        name
       );
       if (userAccount) {
         // call another method if user ===true? then logieedin the user

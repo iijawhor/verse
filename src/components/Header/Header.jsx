@@ -1,5 +1,7 @@
-import React from "react";
-import { Container } from "../../exports";
+import React, { useState } from "react";
+import { Container, Authentication, AuthenticationPage } from "../../exports";
+import { useDispatch, useSelector } from "react-redux";
+import { setDisplayAuthentication } from "../../store/handleStates";
 function Header() {
   const headerItems = [
     {
@@ -23,9 +25,18 @@ function Header() {
       authentication: false
     }
   ];
+  const displayAuthentication = useSelector(
+    (state) => state.handleState.displayAuthentication
+  );
+
+  const dispatch = useDispatch();
+  const handleNavigation = (name) => {
+    if (name === "Sign in")
+      dispatch(setDisplayAuthentication(!displayAuthentication));
+  };
   return (
-    <Container className="border-2 border-current fixed">
-      <header className="h-20 flex items-center justify-between w-3/4 m-auto">
+    <Container className="border-2 border-current fixed z-50 ">
+      <header className="h-20 flex items-center justify-between w-3/4 m-auto max-sm:w-full max-sm:pl-5 max-sm:pr-5 max-sm:w-full">
         <div className="">
           <h className="font-mono text-4xl  tracking-tighter font-semibold italic indent-0.5">
             Verse
@@ -33,17 +44,23 @@ function Header() {
         </div>
 
         <div className="flex items-center gap-5">
-          <ul className="flex items-center gap-3">
+          <ul className="flex items-center gap-3 max-sm:hidden">
             {headerItems.map((headerList) => (
               <li
                 className="tracking-wide font-sens text-base cursor-pointer"
                 key={headerList.id}
+                onClick={() => handleNavigation(headerList.name)}
               >
                 {headerList.name}
               </li>
             ))}
           </ul>
-          <button className=" border-2 border-current py-1 px-2 rounded-3xl cursor-pointer bg-black text-white font-mono text-base">
+          <button
+            onClick={() =>
+              dispatch(setDisplayAuthentication(!displayAuthentication))
+            }
+            className=" border-2 border-current py-1 px-2 rounded-3xl cursor-pointer bg-black text-white font-mono text-base"
+          >
             Get Started
           </button>
         </div>
