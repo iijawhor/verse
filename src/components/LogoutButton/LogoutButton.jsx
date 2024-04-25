@@ -8,9 +8,9 @@ function LogoutButton() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const logoutHandler = () => {
-    authService.logOut().then(() => {
+    authService.logout().then(() => {
       dispatch(logout());
-      navigate("/signin");
+      navigate("/banner");
     });
   };
 

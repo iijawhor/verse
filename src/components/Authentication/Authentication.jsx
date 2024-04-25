@@ -44,7 +44,7 @@ function Authentication({ title, googleTitle, facebookTitle, emailTitle }) {
               Sign up with Facebook
             </button>
             <button
-              onClick={() => navigate("/signin")}
+              onClick={() => navigate("")}
               className="text-lg font-sans tracking-wide py-1 px-3 border-2 border-slate-500 rounded-full cursor-pointer"
             >
               Sign up with Email

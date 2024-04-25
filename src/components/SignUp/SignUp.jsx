@@ -4,7 +4,7 @@ import authService from "../../firebase/firebaseAuthentication";
 import { useDispatch } from "react-redux";
 import { signin } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
-function SignUp() {
+function SignUp({ displaySignUp, setDisplaySignUp }) {
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassord] = useState("");
@@ -20,7 +20,7 @@ function SignUp() {
       if (userData) {
         const user = authService.getCurrentUser();
         dispatch(signin(user));
-        navigate("/home");
+        navigate("/");
       }
       console.log("User data", userData);
     } catch (error) {
@@ -34,6 +34,7 @@ function SignUp() {
     const data = { email, password, name };
     setUser(data);
     signup(data);
+
     const response = await fetch(
       "https://verse-3282b-default-rtdb.firebaseio.com/users.json",
       {
@@ -47,7 +48,24 @@ function SignUp() {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center text-center h-full">
+    <div className="absolute mt-5 flex flex-col items-center justify-center text-center  md:right-40 bg-white max-h-fit px-10 py-10 rounded">
+      <p
+        className="absolute top-2 right-2"
+        onClick={() => setDisplaySignUp(!displaySignUp)}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="w-6 h-6 cursor-pointer"
+        >
+          <path
+            fillRule="evenodd"
+            d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </p>
       <div className="relative m-auto flex flex-col aitems-center justify-center gap-5">
         <h1 className="text-lg text-black font-semibold font-sans text-center tracking-wide">
           Sign Up with email.
@@ -100,12 +118,6 @@ function SignUp() {
             Signup
           </button>
         </form>
-        <p className="font-sans tracking-wide text-sm ">
-          Already have an account?
-          <button className="text-green-600 font-semibold cursor-pointer font-mono ml-1">
-            Sign in
-          </button>
-        </p>
       </div>
       <p>{error && error}</p>
     </div>

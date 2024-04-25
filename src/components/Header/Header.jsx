@@ -1,53 +1,67 @@
-import React, { useState } from "react";
-import { Container, Authentication, AuthenticationPage } from "../../exports";
-import { useDispatch, useSelector } from "react-redux";
-import { setDisplayAuthentication } from "../../store/handleStates";
-function Header() {
+import React from "react";
+import { Container, Authentication } from "../../exports";
+function Header({
+  displaySignIn,
+  displaySignUp,
+  setDisplaySignIn,
+  setDisplaySignUp
+}) {
   const headerItems = [
     {
       name: "Our story",
       id: 1,
-      authentication: false
+      authentication: true
     },
     {
       name: "Membership",
       id: 2,
-      authentication: false
+      authentication: true
     },
     {
       name: "Write",
       id: 3,
-      authentication: false
+      authentication: true
     },
     {
       name: "Sign in",
       id: 4,
       authentication: false
+    },
+    {
+      name: "Sign up",
+      id: 5,
+      authentication: false
     }
   ];
-  const displayAuthentication = useSelector(
-    (state) => state.handleState.displayAuthentication
-  );
 
-  const dispatch = useDispatch();
   const handleNavigation = (name) => {
-    if (name === "Sign in")
-      dispatch(setDisplayAuthentication(!displayAuthentication));
+    if (name === "Sign in") {
+      setDisplaySignUp(false);
+      setDisplaySignIn(!displaySignIn);
+
+      console.log(name);
+    } else if (name === "Sign up") {
+      setDisplaySignIn(false);
+      setDisplaySignUp(!displaySignUp);
+      console.log(name);
+    }
   };
   return (
-    <Container className="border-2 border-current fixed z-50 ">
-      <header className="h-20 flex items-center justify-between w-3/4 m-auto max-sm:w-full max-sm:pl-5 max-sm:pr-5 max-sm:w-full">
+    <Container className="border-b-2 border-current fixed z-50 ">
+      <header className="h-20 flex items-center justify-between w-full p-2 m-auto lg:w-5/6">
         <div className="">
-          <h className="font-mono text-4xl  tracking-tighter font-semibold italic indent-0.5">
+          <h1 className="font-mono text-4xl  tracking-tighter font-semibold italic indent-0.5">
             Verse
-          </h>
+          </h1>
         </div>
 
         <div className="flex items-center gap-5">
-          <ul className="flex items-center gap-3 max-sm:hidden">
+          <ul className="flex items-center gap-3">
             {headerItems.map((headerList) => (
               <li
-                className="tracking-wide font-sens text-base cursor-pointer"
+                className={`tracking-wide font-sens text-base cursor-pointer ${
+                  headerList.authentication === true ? "hidden md:block" : ""
+                }`}
                 key={headerList.id}
                 onClick={() => handleNavigation(headerList.name)}
               >
@@ -56,10 +70,8 @@ function Header() {
             ))}
           </ul>
           <button
-            onClick={() =>
-              dispatch(setDisplayAuthentication(!displayAuthentication))
-            }
-            className=" border-2 border-current py-1 px-2 rounded-3xl cursor-pointer bg-black text-white font-mono text-base"
+            onClick={() => setDisplaySignUp(!displaySignUp)}
+            className=" border-2 border-current py-1 px-2 rounded-3xl cursor-pointer bg-black text-white font-mono text-base hidden md:block"
           >
             Get Started
           </button>

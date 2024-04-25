@@ -25,7 +25,7 @@ export class FirebaseAuthService {
         return userAccount;
       }
     } catch (error) {
-      console.error("Create user error", error);
+      // console.error("Create user error", error);
       throw error; // Re-throw the error to be caught by the caller if needed
     }
   }
@@ -40,7 +40,7 @@ export class FirebaseAuthService {
     try {
       await signOut(auth);
     } catch (error) {
-      console.log("Error in logout ", error);
+      // console.log("Error in logout ", error);
     }
   }
   async getCurrentUser() {
@@ -54,7 +54,7 @@ export class FirebaseAuthService {
           if (user) {
             resolve(user);
           } else {
-            console.log("No user");
+            // console.log("No user");
             resolve(null); // Resolve with null if there's no user
           }
         },

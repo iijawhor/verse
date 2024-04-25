@@ -2,7 +2,16 @@ import React, { forwardRef } from "react";
 
 const Input = forwardRef(
   (
-    { placeholder, onClick, value, label, className, onChange, required },
+    {
+      placeholder,
+      onClick,
+      value,
+      label,
+      className,
+      onChange,
+      required,
+      onKeyUp
+    },
     ref
   ) => {
     return (
@@ -12,7 +21,9 @@ const Input = forwardRef(
         onChange={onChange}
         required={required}
         value={value}
-        className={`${className} w-full border-0 m-0 p-0 text-center text-base tracking-tight text-black box-border `}
+        onKeyUp={onKeyUp}
+        ref={ref}
+        className={`${className} w-full text-base tracking-tight text-black box-border outline-none`}
       />
     );
   }
